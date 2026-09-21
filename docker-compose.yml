@@ -1,0 +1,13 @@
+services:
+  eda:
+    build: .
+    container_name: resenas-eda
+    ports:
+      - "8888:8888"
+    volumes:
+      # Data stays outside the image (it's ~390MB) and is mounted read-only.
+      - ./resenas_completo.jsonl:/work/resenas_completo.jsonl:ro
+      # Mount the notebook (not baked into the image) so edits persist to disk.
+      - ./eda_resenas.ipynb:/work/eda_resenas.ipynb
+    environment:
+      - DATA_PATH=/work/resenas_completo.jsonl
